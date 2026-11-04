@@ -42,4 +42,13 @@ export class MyHttpExampleController {
   remove(@Param('id') id: string) {
     return this.myHttpExampleService.remove(+id);
   }
+
+
+@Get()
+async findAll2(): Promise<MyHttpExampleEntity[]> {
+  return [];
 }
+
+}
+
+
