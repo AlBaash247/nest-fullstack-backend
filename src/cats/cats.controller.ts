@@ -1,32 +1,41 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete,ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, Query } from '@nestjs/common';
 import { CatsService } from './cats.service.js';
 import { CreateCatDto } from './dto/create-cat.dto.js';
 import { UpdateCatDto } from './dto/update-cat.dto.js';
 import { CatDecorator } from './entities/cat.decorator.js';
 import { CatEntity } from './entities/cat.entity.js';
+import { CommonDecorator } from '../common/common.decorator.js';
 
+// import { CommonDecorator } from '../common/common.decorator.js';
 const validationPipe: ValidationPipe = new ValidationPipe({ validateCustomDecorators: true });
 
 @Controller('cats')
 export class CatsController {
-  constructor(private readonly catsService: CatsService) {}
-  
+  constructor(private readonly catsService: CatsService) { }
+
 
   @Post()
   create(@Body() createCatDto: CreateCatDto) {
     return this.catsService.create(createCatDto);
   }
-
+  
   @Get()
   findAll() {
     return this.catsService.findAll();
   }
 
+  // @Get('filtered')
+  // async findAllFiltered(@Query('age') age: number, @Query('breed') breed: string) {
+  //   return `This action returns all cats filtered by age: ${age} and breed: ${breed}`;
+  // }
+
+
   @Get(':id')
   findOne(
-    @CatDecorator(validationPipe) cat : CatEntity
+    @CommonDecorator(validationPipe) cat: CatEntity
   ) {
-    return this.catsService.findOne(cat.id);
+      return "mwAW";
+    // return this.catsService.findOne(cat.id);
   }
 
   @Patch(':id')
